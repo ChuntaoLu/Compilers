@@ -1,0 +1,30 @@
+# Created by http://www.gitignore.io
+
+### Java ###
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+
+### Linux ###
+*~
+
+# KDE directory preferences
+.directory
+
+.idea/
+*~
+# only keep java version
+PA2/
+PA3/
+PA4/
+PA5/

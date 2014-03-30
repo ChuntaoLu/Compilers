@@ -1,0 +1,44 @@
+/*
+	sample simple scanner
+
+Compile with:
+java -classpath /afs/ir/class/cs143/cool/sp12/lib/jlex.jar JLex.Main sample.jlex
+javac sample.jlex.java
+
+Run with:
+java Sample < input
+
+*/
+
+import java.lang.System;
+
+class Sample {
+    public static void main(String argv[]) throws java.io.IOException {
+    Yylex yy = new Yylex(System.in);
+    yy.yylex();
+  }
+}
+%%
+
+%{
+private int num_lines = 0;
+%}
+%integer
+%state COMMENT
+%%
+<YYINITIAL> \n                      { num_lines++;System.out.println(); }
+<YYINITIAL> \\                      { System.out.print("LAMBDA "); }
+<YYINITIAL> [A-Za-z][A-Za-z0-9]*    { System.out.print("VAR: " + yytext()); }
+<YYINITIAL> "."                     { System.out.print("DOT "); }
+<YYINITIAL> "("                     { System.out.print("OPEN "); }
+<YYINITIAL> ")"                     { System.out.print("CLOSE "); }
+<YYINITIAL> "+"                     { System.out.print("PLUS "); }
+<YYINITIAL> "*"                     { System.out.print("MULT "); }
+<YYINITIAL> [0-9]+                  { System.out.print("NUM: " + yytext()); }
+<YYINITIAL> [ \t]+                  { /* empty block */ }
+<YYINITIAL> .                       { System.out.print("Invalid character on line " + num_lines + "\n"); }
+<YYINITIAL> "//"                    { yybegin(COMMENT); }
+<COMMENT>   .*             { System.out.println("//" + yytext());/* need an empty block here */ }
+<COMMENT>   \n             { num_lines++; yybegin(YYINITIAL); }
+
+
